@@ -1,13 +1,26 @@
 <template>
-  <ul></ul>
+  <div class="row">
+    <div v-for="column in columnList" :key="column.id" class="col-4 mb-4">
+      <div class="card h-100 shadow-sm">
+        <div class="card-body text-center">
+          <img :src="column.avatar" class="rounded-circle border border-light my-3" :alt="column.title" />
+          <h5 class="card-title">{{ column.title }}</h5>
+          <p class="card-text text-left">
+            {{ column.description }}
+          </p>
+          <router-link to= "#" class="btn btn-outline-primary">进入专栏</router-link>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue'
-export interface ColumnProps{
+import { computed, defineComponent, PropType } from 'vue'
+export interface ColumnProps {
   id: number;
   title: string;
-  avatar: string;
+  avatar?: string;
   description: string;
 }
 export default defineComponent({
@@ -18,7 +31,17 @@ export default defineComponent({
     }
   },
   setup (props) {
-    console.log(props)
+    const columnList = computed(() => {
+      return props.list.map((column) => {
+        if (!column.avatar) {
+          column.avatar = require('@/assets/column.jpg')
+        }
+        return column
+      })
+    })
+    return {
+      columnList
+    }
   }
 })
 </script>
