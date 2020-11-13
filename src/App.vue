@@ -11,7 +11,7 @@ import GlobalHeader, { UserProps } from './components/GlobalHeader.vue'
 import ColumnList, { ColumnProps } from './components/ColumnList.vue'
 
 const userData: UserProps = {
-  isLogin: true,
+  isLogin: false,
   name: 'devin'
 }
 const testData: ColumnProps[] = [

@@ -10,7 +10,8 @@
 </template>
 
 <script lang='ts'>
-import { defineComponent, ref } from 'vue'
+import { defineComponent, ref, watch } from 'vue'
+import useClickOutside from '../hoosk/useClickOutside'
 export default defineComponent({
   props: {
     title: {
@@ -20,12 +21,22 @@ export default defineComponent({
   },
   setup () {
     const isOpen = ref(false)
+    const dropdownRef = ref<null | HTMLElement>(null)
     const toggleOpen = () => {
       isOpen.value = !isOpen.value
     }
+    const isClickOutside = useClickOutside(dropdownRef)
+    watch(isClickOutside, () => {
+      console.log(isClickOutside.value)
+      console.log(isOpen.value)
+      if (isClickOutside.value && isOpen.value) {
+        isOpen.value = false
+      }
+    })
     return {
       isOpen,
-      toggleOpen
+      toggleOpen,
+      dropdownRef
     }
   }
 })
